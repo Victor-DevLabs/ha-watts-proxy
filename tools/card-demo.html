@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root.dark { --primary-text-color:#e1e1e1; --secondary-text-color:#9b9b9b; --card-background-color:#1c1c1c;
+    --divider-color:rgba(225,225,225,.12); --primary-color:#03a9f4; --text-primary-color:#fff; --page:#111111; }
+  :root.light { --primary-text-color:#212121; --secondary-text-color:#727272; --card-background-color:#ffffff;
+    --divider-color:rgba(0,0,0,.12); --primary-color:#03a9f4; --text-primary-color:#fff; --page:#f5f5f5; }
+  html, body { margin:0; background:var(--page); font-family: Roboto, "Segoe UI", Arial, sans-serif; }
+  body { padding:20px; }
+  #wrap { width:860px; }
+</style>
+</head>
+<body>
+<div id="wrap"></div>
+<script>
+  // Minimal stand-in for Home Assistant's ha-card.
+  customElements.define("ha-card", class extends HTMLElement {
+    connectedCallback() {
+      this.style.cssText = "display:block;background:var(--card-background-color);border-radius:12px;" +
+        "border:1px solid var(--divider-color);color:var(--primary-text-color)";
+    }
+  });
+  const q = new URLSearchParams(location.search);
+  document.documentElement.className = q.get("theme") || "dark";
+</script>
+<script src="../card/watts-schedule-card.js"></script>
+<script>
+  function week(...days) {
+    return days.map((p) => { const d = Array(48).fill("0"); for (const [a, b] of p) for (let i = a; i < b; i++) d[i] = "5"; return d.join(""); }).join("");
+  }
+  const wd = [[13, 17], [34, 45]];
+  const W = week(wd, wd, wd, wd, [[13, 17], [34, 47]], [[16, 47]], [[16, 45]]);
+  const zone = (name, w) => ({ state: "", attributes: { week: w, command_topic: "watts_proxy/x/set/schedule", pending: false, zone: name } });
+  const hass = {
+    language: q.get("lang") || "en",
+    states: {
+      "text.watts_zone_1_schedule": zone("Living room", W),
+      "text.watts_zone_2_schedule": zone("Bedroom", week(...Array(7).fill([[12, 16], [42, 46]]))),
+      "text.watts_zone_3_schedule": zone("Office", week(...Array(5).fill([[16, 37]]), [], [])),
+    },
+    callService: async () => {},
+  };
+  const card = document.createElement("watts-schedule-card");
+  card.setConfig({ title: q.get("lang") === "es" ? "Horario semanal" : "Weekly schedule" });
+  document.getElementById("wrap").appendChild(card);
+  card.hass = hass;
+  if (q.get("draft")) {
+    // Show an edit in progress: Saturday morning painted as eco, Wednesday evening extended.
+    let d = W.split("");
+    for (let i = 5 * 48 + 16; i < 5 * 48 + 22; i++) d[i] = "0";
+    for (let i = 2 * 48 + 45; i < 2 * 48 + 47; i++) d[i] = "5";
+    card._draft = d.join("");
+    card._update();
+  }
+</script>
+</body>
+</html>

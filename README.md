@@ -4,6 +4,8 @@ Home Assistant add-on for the **Watts Vision BT-CT02-RF** central unit (underflo
 thermostats). It keeps the Watts cloud and app working, answers locally when the cloud
 is down, and gives Home Assistant full local control of the thermostats.
 
+![Weekly schedule card](images/schedule-card-dark.png)
+
 - **Climate entities:** off / heat / auto, presets eco, boost (with configurable
   duration) and away (frost protection), setpoints, heating or idle.
 - **Weekly schedules** editable from Home Assistant, as text or with a graphical card.
@@ -33,6 +35,8 @@ a DNS rewrite for the central unit (for example with AdGuard Home).
 `card/watts-schedule-card.js` is a graphical editor for the weekly schedules: paint
 comfort/eco by dragging, copy days, save and get confirmation from the central unit.
 English and Spanish, following the language of Home Assistant.
+
+![Editing a schedule: changed cells are hatched until saved](images/schedule-card-light.png)
 
 1. Copy `card/watts-schedule-card.js` to `/config/www/`.
 2. *Settings → Dashboards → ⋮ → Resources → Add resource*:
@@ -65,6 +69,9 @@ Pure Python 3 standard library, no dependencies. Tests:
 python -m unittest discover -s tests
 node --test tests/card.test.js
 ```
+
+`tools/card-demo.html` shows the card with made-up data, without Home Assistant
+(`?theme=light|dark&lang=en|es&draft=1`). The screenshots are taken from it.
 
 ## Credits
 
