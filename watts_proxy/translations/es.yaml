@@ -1,0 +1,72 @@
+configuration:
+  language:
+    name: Idioma
+    description: Idioma de los nombres de las entidades, del texto del horario y del detalle de los eventos (en o es).
+  allow_control:
+    name: Permitir control
+    description: Crea las entidades climate y de horario, que envían órdenes a los termostatos. Apagado = solo lectura.
+  local_fallback:
+    name: Respuesta local
+    description: Responder a la central en local cuando la nube de Watts no contesta.
+  force_local:
+    name: Forzar modo local
+    description: No usar nunca la nube (la app de Watts deja de ver los cambios). Mejor usar el interruptor "Modo local" de Home Assistant.
+  mqtt_enabled:
+    name: MQTT activado
+    description: Publicar la central y los termostatos en Home Assistant por MQTT.
+  mqtt_host:
+    name: Servidor MQTT
+    description: Vacío para usar automáticamente el complemento Mosquitto.
+  mqtt_port:
+    name: Puerto MQTT
+    description: Solo se usa junto con el servidor MQTT.
+  mqtt_user:
+    name: Usuario MQTT
+    description: Solo se usa junto con el servidor MQTT.
+  mqtt_password:
+    name: Contraseña MQTT
+    description: Solo se usa junto con el servidor MQTT.
+  discovery_prefix:
+    name: Prefijo de discovery
+    description: Prefijo de MQTT discovery de Home Assistant.
+  upstream_host:
+    name: Servidor de la nube
+    description: Nombre del servidor de la nube de Watts.
+  upstream_dns:
+    name: DNS de la nube
+    description: DNS con el que se resuelve la dirección real de la nube (no puede ser el que hace la reescritura).
+  upstream_ip_fallback:
+    name: IP de reserva de la nube
+    description: Dirección de la nube si falla la consulta DNS.
+  listen_http:
+    name: Puerto HTTP
+    description: Puerto al que se conecta la central. Tiene que ser el 80.
+  cloud_timeout:
+    name: Espera de la nube
+    description: Segundos de espera de cada respuesta de la nube.
+  cloud_retry_seconds:
+    name: Reintento de la nube
+    description: Segundos entre reintentos de la nube mientras se está en local.
+  local_delay_ms:
+    name: Retardo local
+    description: Retardo de cada respuesta local, en ms, para imitar a la nube.
+  central_timeout_min:
+    name: Espera de la central
+    description: Minutos sin datos antes de avisar de que la central no envía nada.
+  zone_timeout_min:
+    name: Espera de las zonas
+    description: Minutos sin informes antes de avisar de un termostato.
+  timezone:
+    name: Zona horaria
+    description: Vacío para usar la de Home Assistant.
+  log_routine:
+    name: Registrar el tráfico rutinario
+    description: Escribir cada petición en el registro del complemento (muy extenso).
+  full_capture_connections:
+    name: Conexiones capturadas
+    description: Número de primeras conexiones cuyo contenido completo se guarda en /share/watts_proxy. Las capturas llevan la MAC de la central.
+  max_payload_bytes:
+    name: Tamaño de captura
+    description: Máximo de bytes capturados por conexión.
+network:
+  80/tcp: Puerto HTTP del proxy (red del host).

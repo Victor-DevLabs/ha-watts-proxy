@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+# Logs and captures contain the MAC address of the central unit: never commit them.
+*.log
+captures/
+capturas/
+.vscode/
+.idea/

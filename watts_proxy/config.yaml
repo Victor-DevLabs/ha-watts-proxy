@@ -1,0 +1,63 @@
+name: Watts Proxy
+version: "0.9.0"
+slug: watts_proxy
+description: >-
+  Local proxy for the Watts Vision BT-CT02-RF central unit: keeps the Watts cloud and app
+  working, answers locally when the cloud is down, and exposes the thermostats to Home
+  Assistant over MQTT (climate, schedules, health).
+url: https://github.com/Victor-DevLabs/ha-watts-proxy
+arch:
+  - aarch64
+  - amd64
+init: false
+startup: application
+boot: auto
+# The central unit talks HTTP to port 80 of the host the DNS rewrite points to.
+host_network: true
+services:
+  - mqtt:want
+map:
+  - share:rw
+options:
+  language: en
+  allow_control: false
+  local_fallback: true
+  force_local: false
+  mqtt_enabled: true
+  discovery_prefix: homeassistant
+  upstream_host: smarthome.wattselectronics.com
+  upstream_dns: 1.1.1.1
+  upstream_ip_fallback: 108.142.40.45
+  listen_http: 80
+  cloud_timeout: 5
+  cloud_retry_seconds: 60
+  local_delay_ms: 120
+  central_timeout_min: 5
+  zone_timeout_min: 30
+  log_routine: false
+  full_capture_connections: 0
+  max_payload_bytes: 16384
+schema:
+  language: list(en|es)
+  allow_control: bool
+  local_fallback: bool
+  force_local: bool
+  mqtt_enabled: bool
+  mqtt_host: str?
+  mqtt_port: port?
+  mqtt_user: str?
+  mqtt_password: password?
+  discovery_prefix: str
+  upstream_host: str
+  upstream_dns: str
+  upstream_ip_fallback: str
+  listen_http: port
+  cloud_timeout: int(1,30)
+  cloud_retry_seconds: int(10,3600)
+  local_delay_ms: int(0,2000)
+  central_timeout_min: int(1,120)
+  zone_timeout_min: int(5,1440)
+  timezone: str?
+  log_routine: bool
+  full_capture_connections: int(0,)
+  max_payload_bytes: int(0,)

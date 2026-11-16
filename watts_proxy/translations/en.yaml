@@ -1,0 +1,72 @@
+configuration:
+  language:
+    name: Language
+    description: Language of entity names, schedule text and event details (en or es).
+  allow_control:
+    name: Allow control
+    description: Create climate and schedule entities that send commands to the thermostats. Off = read only.
+  local_fallback:
+    name: Local fallback
+    description: Answer the central unit locally when the Watts cloud does not answer.
+  force_local:
+    name: Force local mode
+    description: Never use the cloud (the Watts app stops seeing changes). Better use the "Local mode" switch in Home Assistant.
+  mqtt_enabled:
+    name: MQTT enabled
+    description: Publish the central unit and thermostats to Home Assistant over MQTT.
+  mqtt_host:
+    name: MQTT host
+    description: Leave empty to use the Mosquitto add-on automatically.
+  mqtt_port:
+    name: MQTT port
+    description: Only used together with MQTT host.
+  mqtt_user:
+    name: MQTT user
+    description: Only used together with MQTT host.
+  mqtt_password:
+    name: MQTT password
+    description: Only used together with MQTT host.
+  discovery_prefix:
+    name: Discovery prefix
+    description: MQTT discovery prefix of Home Assistant.
+  upstream_host:
+    name: Cloud host
+    description: Host name of the Watts cloud.
+  upstream_dns:
+    name: Cloud DNS
+    description: DNS server used to resolve the real cloud address (it must not be the one doing the rewrite).
+  upstream_ip_fallback:
+    name: Cloud IP fallback
+    description: Cloud address used if the DNS query fails.
+  listen_http:
+    name: HTTP port
+    description: Port the central unit connects to. It must be 80.
+  cloud_timeout:
+    name: Cloud timeout
+    description: Seconds to wait for each cloud answer.
+  cloud_retry_seconds:
+    name: Cloud retry
+    description: Seconds between cloud retries while in local mode.
+  local_delay_ms:
+    name: Local delay
+    description: Delay of each local answer, in ms, to imitate the cloud.
+  central_timeout_min:
+    name: Central unit timeout
+    description: Minutes without data before the central unit is reported as silent.
+  zone_timeout_min:
+    name: Zone timeout
+    description: Minutes without reports before a thermostat is reported.
+  timezone:
+    name: Time zone
+    description: Leave empty to use the one of Home Assistant.
+  log_routine:
+    name: Log routine traffic
+    description: Write every request to the add-on log (very verbose).
+  full_capture_connections:
+    name: Captured connections
+    description: Number of first connections whose full content is written to /share/watts_proxy. The captures contain the MAC address of the central unit.
+  max_payload_bytes:
+    name: Capture size
+    description: Maximum bytes captured per connection.
+network:
+  80/tcp: HTTP port of the proxy (host network).
